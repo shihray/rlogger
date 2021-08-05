@@ -1,4 +1,4 @@
-module rlogger
+module github.com/shihray/rlogger
 
 go 1.16
 
