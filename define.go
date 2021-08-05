@@ -1,6 +1,6 @@
 package rlogger
 
-import "rlogger/utils"
+import "github.com/shihray/rlogger/utils"
 
 // TraceSpan A SpanID refers to a single span.
 type TraceSpan interface {

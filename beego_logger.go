@@ -3,7 +3,7 @@ package rlogger
 import (
 	"encoding/json"
 	"fmt"
-	"rlogger/beego"
+	"github.com/shihray/rlogger/beego"
 )
 
 //NewBeegoLogger beego

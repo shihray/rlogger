@@ -1,7 +1,7 @@
 package rlogger
 
 import (
-	beego "rlogger/beego"
+	beego "github.com/shihray/rlogger/beego"
 )
 
 var globalLogger *beego.BeeLogger

@@ -1,8 +1,8 @@
 package rlogger
 
 import (
-	beego "rlogger/beego"
-	"rlogger/utils"
+	beego "github.com/shihray/rlogger/beego"
+	"github.com/shihray/rlogger/utils"
 )
 
 func CreateRootTrace() TraceSpan {
