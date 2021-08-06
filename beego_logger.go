@@ -7,7 +7,7 @@ import (
 )
 
 //NewBeegoLogger beego
-func NewBeegoLogger(debug bool, ProcessID string, Logdir string, settings map[string]interface{}) *logs.BeeLogger {
+func NewBeegoLogger(debug bool, ProcessID string, logDir string, settings map[string]interface{}) *logs.BeeLogger {
 	log := logs.NewLogger()
 	log.ProcessID = ProcessID
 	log.EnableFuncCallDepth(true)
@@ -30,7 +30,7 @@ func NewBeegoLogger(debug bool, ProcessID string, Logdir string, settings map[st
 		if suffix, ok := ff["suffix"]; ok {
 			Suffix = suffix.(string)
 		}
-		ff["filename"] = fmt.Sprintf("%s/%v%s%s", Logdir, Prefix, ProcessID, Suffix)
+		ff["filename"] = fmt.Sprintf("%s/%v%s%s", logDir, Prefix, ProcessID, Suffix)
 		config, err := json.Marshal(ff)
 		if err != nil {
 			logs.Error(err)
@@ -47,7 +47,7 @@ func NewBeegoLogger(debug bool, ProcessID string, Logdir string, settings map[st
 		if suffix, ok := multifile["suffix"]; ok {
 			Suffix = suffix.(string)
 		}
-		multifile["filename"] = fmt.Sprintf("%s/%v%s%s", Logdir, Prefix, ProcessID, Suffix)
+		multifile["filename"] = fmt.Sprintf("%s/%v%s%s", logDir, Prefix, ProcessID, Suffix)
 		config, err := json.Marshal(multifile)
 		if err != nil {
 			logs.Error(err)

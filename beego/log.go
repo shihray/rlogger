@@ -40,6 +40,7 @@ import (
 	"github.com/json-iterator/go"
 	"log"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
@@ -114,7 +115,7 @@ type Logger interface {
 }
 
 var adapters = make(map[string]newLoggerFunc)
-var LevelPrefix = [LevelDebug + 1]string{"[M] ", "[A] ", "[C] ", "[E] ", "[W] ", "[N] ", "[I] ", "[D] "}
+var LevelPrefix = [LevelDebug + 1]string{"[Emergency] ", "[Alert] ", "[Critical] ", "[Error] ", "[Warn] ", "[Notice] ", "[Info] ", "[Debug] "}
 
 // Register makes a log provide available by the provided name.
 // If Register is called twice with the same name or if driver is nil,
@@ -386,22 +387,11 @@ func (bl *BeeLogger) formatText(when time.Time, span *BeegoTraceSpan, logLevel i
 		msg = fmt.Sprintf(msg, v...)
 	}
 	if bl.enableFuncCallDepth {
-		//_, file, line, ok := runtime.Caller(bl.loggerFuncCallDepth)
-		//if !ok {
-		//	file = "???"
-		//	line = 0
-		//}
-		//_, filename := path.Split(file)
-		//msg = "[" + filename + ":" + strconv.Itoa(line) + "] " + msg
-		if logLevel <= LevelWarn {
-			CallStack, ShortFile := GetCallStack(5, bl.loggerFuncCallDepth, "")
-			msg = "[" + ShortFile + "] " + msg + " " + CallStack
-		} else {
-			//太耗性能
-			//_, ShortFile := GetCallStack(5, bl.loggerFuncCallDepth, "")
-			//msg = "[" + ShortFile + "] " + msg
+		_, file, line, ok := runtime.Caller(bl.loggerFuncCallDepth)
+		if ok {
+			t, _ := filepath.Abs(file)
+			msg = fmt.Sprintf("[%s:%d] %s", t, line, msg)
 		}
-
 	}
 
 	//set level info in front of filename info
